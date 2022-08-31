@@ -4,7 +4,7 @@ set -ex;
 
 exec /usr/bin/java \
   $JAVA_OPTS \
-  -Djava.io.tmpdir="/home/java-app/tmp" \
+  -Djava.io.tmpdir="/home/app/tmp" \
   -jar \
-  /home/java-app/lib/app.jar \
+  /home/app/example/app.jar \
   "$@"

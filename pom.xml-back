@@ -48,8 +48,23 @@
       <plugin>
         <groupId>com.spotify</groupId>
         <artifactId>dockerfile-maven-plugin</artifactId>
-        <version>1.4.13</version>
+        <version>1.4.3</version>
+<!--
+	<executions>
+          <execution>
+            <id>default</id>
+            <goals>
+              <goal>build</goal>
+              <goal>push</goal>
+      	    </goals>
+    	  </execution>
+  	</executions>
+--!>
         <configuration>
+<!--
+         <username>repoUserName</username>
+          <password>repoPassword</password>
+--!>
           <repository>192.168.3.123:30002/ukubernetes/dockerfile-${project.artifactId}</repository>
           <tag>${project.version}</tag>
           <useMavenSettingsForAuth>true</useMavenSettingsForAuth>
