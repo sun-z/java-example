@@ -6,5 +6,5 @@ exec /usr/bin/java \
   $JAVA_OPTS \
   -Djava.io.tmpdir="/home/app/tmp" \
   -jar \
-  /home/app/example/app.jar \
+  /home/app/lib/dockerfile-java-examples.jar \
   "$@"
