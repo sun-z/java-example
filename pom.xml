@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>me.chanjar.dockerfile-examples</groupId>
-  <artifactId>java-examples-1</artifactId>
+  <artifactId>java-examples</artifactId>
   <version>1.0-SNAPSHOT</version>
 
   <parent>
