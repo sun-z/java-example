@@ -29,7 +29,7 @@ spec:
         name: java-example
     spec:
       imagePullSecrets:
-      - name: harbor-registry
+      - name: SECRET_NAME
       containers:
         - image: IMAGE_NAME
           imagePullPolicy: IfNotPresent
