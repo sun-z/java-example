@@ -59,7 +59,7 @@
     	  </execution>
   	</executions>
         <configuration>
-          <repository>192.168.3.123:30002/ukubernetes/dockerfile-${project.name}</repository>
+          <repository>harbor.sun.com/ukubernetes/dockerfile-${project.name}</repository>
           <tag>${project.version}</tag>
           <useMavenSettingsForAuth>true</useMavenSettingsForAuth>
           <buildArgs>
