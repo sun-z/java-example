@@ -1,0 +1,89 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations: {}
+  labels:
+    layer: web
+    name: java-example
+  name: java-example
+  namespace: NS
+spec:
+  minReadySeconds: 10
+  progressDeadlineSeconds: 600
+  replicas: RSCOUNT
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      layer: web
+      name: java-example
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        layer: web
+        name: java-example
+    spec:
+      imagePullSecrets:
+      - name: harbor-registry
+      containers:
+        - image: IMAGE_NAME
+          imagePullPolicy: IfNotPresent
+          name: java-example
+          ports:
+            - containerPort: 8080
+              name: web
+    
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations: {}
+  labels:
+    layer: web
+    name: java-example
+  name: java-example
+  namespace: NS
+spec:
+  ports:
+    - name: web
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    layer: web
+    name: java-example
+  type: ClusterIP
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  labels:
+    layer: web
+    name: java-example
+  name: java-example
+  namespace: NS
+spec:
+  defaultBackend:
+    service:
+      name: jenkins
+      port:
+        number: 8080
+  ingressClassName: nginx
+  rules:
+    - host: example
+      http:
+        paths:
+          - backend:
+              service:
+                name: java-example
+                port:
+                  number: 8080
+            path: /
+            pathType: Prefix
