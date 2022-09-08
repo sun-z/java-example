@@ -5,7 +5,7 @@
 
   <groupId>me.chanjar.dockerfile-examples</groupId>
   <artifactId>java-examples</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
@@ -59,8 +59,7 @@
     	  </execution>
   	</executions>
         <configuration>
-          <repository>harbor.sun.com/ukubernetes/dockerfile-${project.name}</repository>
-          <tag>${project.version}</tag>
+          <repository>harbor.sun.com/ukubernetes/${project.name}-${project.version}</repository>
           <useMavenSettingsForAuth>true</useMavenSettingsForAuth>
           <buildArgs>
             <JAR_FILE>${project.build.finalName}.${project.packaging}</JAR_FILE>
