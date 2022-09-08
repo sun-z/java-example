@@ -1,4 +1,4 @@
-FROM openjdk:8-alpine
+FROM harbor.sun.com/google_containers/openjdk:8-alpine
 
 ARG NAME
 ARG VERSION
