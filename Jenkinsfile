@@ -1,27 +1,19 @@
 def registry = "harbor.sun.com"
 // 项目
 def project = "ukubernetes"
-def branch = "master"
 def app_name = "java-examples"
 def project_version = "1.0"
 // def tag = v0.${BUILD_NUMBER}
 def image_name = "${registry}/${project}/${app_name}-${project_version}:v0.${BUILD_NUMBER}"
-// def git_address = ""
-def git_address = ""
 def host_name = "example.sun.com"
 
 // 认证
 def secret_name = "harbor-registry"
-def git_auth = "github"
 
 
 node('sun-jnlp') {
 	stage('Clone:拉取代码') {
         echo "1.Clone Stage"
-//         checkout([$class: 'GitSCM', 
-//         branches: [[name: "*/${branch}"]], 
-//         extensions: [], 
-//         userRemoteConfigs: [[credentialsId: "${git_auth}", url: "${git_address}"]]])
     }
     
     stage('Test:测试') {
