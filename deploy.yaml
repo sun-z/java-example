@@ -77,7 +77,7 @@ spec:
         number: 8080
   ingressClassName: nginx
   rules:
-    - host: example
+    - host: HOSTNAME
       http:
         paths:
           - backend:
