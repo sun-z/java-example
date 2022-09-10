@@ -28,6 +28,13 @@ spec:
         layer: web
         name: java-example
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  name: java-example
+              topologyKey: kubernetes.io/hostname
       imagePullSecrets:
       - name: SECRET_NAME
       containers:
@@ -37,7 +44,6 @@ spec:
           ports:
             - containerPort: 8080
               name: web
-    
 
 ---
 apiVersion: v1
