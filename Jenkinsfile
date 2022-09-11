@@ -58,7 +58,7 @@ node('sun-jnlp') {
 // 		when { environment name: 'action', value: 'release' }
 		echo "6. Deploy Stage"
 		sh """
-			kubectl -n ${Namespace} apply -f deploy.yaml
+			kubectl -n ${Namespace} apply -f deploy.yaml  --record=true
 			sleep 10
 			kubectl -n ${Namespace} get pod
 		"""
