@@ -14,8 +14,8 @@ def secret_name = "harbor-registry"
 node('sun-jnlp') {
 	 // 拉取代码
 	stage('Clone:拉取代码') {
-        echo "1.Clone Stage"
-	checkout scm
+        	echo "1.Clone Stage"
+		checkout scm
     	}
 	
     	stage('Test:测试') {
