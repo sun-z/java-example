@@ -24,33 +24,33 @@ node('sun-jnlp') {
 	// 代码编译及打包成镜像
     	stage('Build:代码编译及构建镜像') {
 		echo "3.Build Docker Image Stage"
-		sh "docker build -t ${image_name} ."
+// 		sh "docker build -t ${image_name} ."
 		sh """
 		    ls
 		    mvn clean package -Dmaven.test.skip=true dockerfile:build -Ddockerfile.tag=v0.${BUILD_NUMBER}
 		    ls target
-	    """
+	    	"""
     	}
 	// 项目镜像推送到仓库
     	stage('Push:镜像上传') {
 		echo "4.Push Docker Image Stage"
 		withCredentials([usernamePassword(credentialsId: 'HarBor', usernameVariable: 'HarBorUser', passwordVariable: 'HarBorPassword')]) {
-            sh """
-				docker login ${registry} -u ${HarBorUser} -p ${HarBorPassword}
-				mvn dockerfile:push
-			"""
+            	sh """
+	    		docker login ${registry} -u ${HarBorUser} -p ${HarBorPassword}
+			mvn dockerfile:push
+		"""
         	}
    	}
    	stage('YAML:修改YAML文件') {
 		echo "5. Change YAML File Stage"
 		sh """
 			pwd
-            ls
-            sed -i 's#IMAGE_NAME#${image_name}#' deploy.yaml
-            sed -i 's#SECRET_NAME#${secret_name}#' deploy.yaml
-            sed -i 's#RSCOUNT#${ReplicaCount}#' deploy.yaml
-            sed -i 's#NS#${Namespace}#' deploy.yaml	
-            sed -i 's#HOSTNAME#${host_name}#' deploy.yaml
+            		ls
+            		sed -i 's#IMAGE_NAME#${image_name}#' deploy.yaml
+            		sed -i 's#SECRET_NAME#${secret_name}#' deploy.yaml
+            		sed -i 's#RSCOUNT#${ReplicaCount}#' deploy.yaml
+            		sed -i 's#NS#${Namespace}#' deploy.yaml	
+            		sed -i 's#HOSTNAME#${host_name}#' deploy.yaml
 		"""
     	}
 	// 部署到K8S主机
