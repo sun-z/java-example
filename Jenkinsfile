@@ -1,7 +1,7 @@
 def registry = "harbor.sun.com"
 // 项目
 def project = "ukubernetes"
-def app_name = "java-examples"
+def app_name = "java-example"
 def project_version = "1.0"
 // def tag = v0.${BUILD_NUMBER}
 def image_name = "${registry}/${project}/${app_name}-${project_version}:v0.${BUILD_NUMBER}"
