@@ -24,7 +24,7 @@ RUN set -eux; \
 COPY --chown=app:app docker-entrypoint.sh /home/app/docker-entrypoint.sh
 
 # 导入JAR
-COPY --chown=app:app target/${JAR_FILE} /home/app/lib/dockerfile-java-examples.jar
+COPY --chown=app:app target/${JAR_FILE} /home/app/lib/dockerfile-java-example.jar
 
 USER app
 
