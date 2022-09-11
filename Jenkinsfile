@@ -69,7 +69,9 @@ node('sun-jnlp') {
 		steps {
 			echo "k8s images is rolled back! " 
 			sh '''
-//             			ssh root@192.168.154.134 "kubectl rollout undo deployment/tomcat-dpm  -n default" 
+             			kubectl describe deployment ${app_name} -n ${Namespace} |grep -w 'Image:'
+//                     		kubectl rollout undo deployment ${app_name} -n ${Namespace}
+//                     		kubectl describe deployment ${app_name} -n ${Namespace} |grep -w 'Image:'"
             		'''
           	} 
        }  
