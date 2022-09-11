@@ -12,33 +12,36 @@ def secret_name = "harbor-registry"
 
 
 node('sun-jnlp') {
+	 // 拉取代码
 	stage('Clone:拉取代码') {
         echo "1.Clone Stage"
 	checkout scm
-    }
-    
-    stage('Test:测试') {
+    	}
+	
+    	stage('Test:测试') {
 		echo "2.Test Stage"
-    }
-    stage('Build:代码编译及构建镜像') {
+    	}
+	// 代码编译及打包成镜像
+    	stage('Build:代码编译及构建镜像') {
 		echo "3.Build Docker Image Stage"
-// 		sh "docker build -t ${image_name} ."
+		sh "docker build -t ${image_name} ."
 		sh """
 		    ls
 		    mvn clean package -Dmaven.test.skip=true dockerfile:build -Ddockerfile.tag=v0.${BUILD_NUMBER}
 		    ls target
 	    """
-    }
-    stage('Push:镜像上传') {
+    	}
+	// 项目镜像推送到仓库
+    	stage('Push:镜像上传') {
 		echo "4.Push Docker Image Stage"
 		withCredentials([usernamePassword(credentialsId: 'HarBor', usernameVariable: 'HarBorUser', passwordVariable: 'HarBorPassword')]) {
             sh """
 				docker login ${registry} -u ${HarBorUser} -p ${HarBorPassword}
 				mvn dockerfile:push
 			"""
-        }
-    }
-    stage('YAML:修改YAML文件') {
+        	}
+   	}
+   	stage('YAML:修改YAML文件') {
 		echo "5. Change YAML File Stage"
 		sh """
 			pwd
@@ -49,13 +52,25 @@ node('sun-jnlp') {
             sed -i 's#NS#${Namespace}#' deploy.yaml	
             sed -i 's#HOSTNAME#${host_name}#' deploy.yaml
 		"""
-    }
-    stage('Deploy:部署') {
+    	}
+	// 部署到K8S主机
+    	stage('Deploy:部署') {
+// 		when { environment name: 'action', value: 'release' }
 		echo "6. Deploy Stage"
 		sh """
 			kubectl -n ${Namespace} apply -f deploy.yaml
 			sleep 10
 			kubectl -n ${Namespace} get pod
 		"""
-    }
+    	}
+	// K8S紧急时回滚
+    	stage('Rollback to k8s') {
+// 		when { environment name: 'action', value: 'rollback' }
+		steps {
+			echo "k8s images is rolled back! " 
+			sh '''
+//             			ssh root@192.168.154.134 "kubectl rollout undo deployment/tomcat-dpm  -n default" 
+            		'''
+          	} 
+       }  
 }
