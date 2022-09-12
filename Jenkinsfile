@@ -66,13 +66,11 @@ node('sun-jnlp') {
 	// K8S紧急时回滚
     	stage('Rollback to k8s') {
 // 		when { environment name: 'action', value: 'rollback' }
-		steps {
-			echo "k8s images is rolled back! " 
-			sh """
-             			kubectl describe deployment ${app_name} -n ${Namespace} |grep -w 'Image:'
-//                     		kubectl rollout undo deployment ${app_name} -n ${Namespace}
-//                     		kubectl describe deployment ${app_name} -n ${Namespace} |grep -w 'Image:'
-            		"""
-          	} 
+		echo "k8s images is rolled back! " 
+		sh """
+             		kubectl describe deployment ${app_name} -n ${Namespace} |grep -w 'Image:'
+//                     	kubectl rollout undo deployment ${app_name} -n ${Namespace}
+//                     	kubectl describe deployment ${app_name} -n ${Namespace} |grep -w 'Image:'
+            	"""
        }  
 }
