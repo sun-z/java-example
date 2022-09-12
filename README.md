@@ -1,1 +1,1 @@
-# dockerfile-examples
+# java-example
