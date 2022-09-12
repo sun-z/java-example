@@ -69,8 +69,8 @@ node('sun-jnlp') {
 		echo "k8s images is rolled back! " 
 		sh """
              		kubectl describe deployment ${app_name} -n ${Namespace} |grep -w 'Image:'
-//                     	kubectl rollout undo deployment ${app_name} -n ${Namespace}
-//                     	kubectl describe deployment ${app_name} -n ${Namespace} |grep -w 'Image:'
+                     	kubectl rollout undo deployment ${app_name} -n ${Namespace}
+                     	kubectl describe deployment ${app_name} -n ${Namespace} |grep -w 'Image:'
             	"""
        }  
 }
