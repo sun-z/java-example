@@ -46,11 +46,12 @@ node('sun-jnlp') {
 		sh """
 			pwd
             		ls
-            		sed -i 's#IMAGE_NAME#${image_name}#' deploy.yaml
-            		sed -i 's#SECRET_NAME#${secret_name}#' deploy.yaml
-            		sed -i 's#RSCOUNT#${ReplicaCount}#' deploy.yaml
-            		sed -i 's#NS#${Namespace}#' deploy.yaml	
-            		sed -i 's#HOSTNAME#${host_name}#' deploy.yaml
+                        mv deploy.yaml  deploy-v0.${BUILD_NUMBER}.yaml
+            		sed -i 's#IMAGE_NAME#${image_name}#' deploy-v0.${BUILD_NUMBER}.yaml
+            		sed -i 's#SECRET_NAME#${secret_name}#' deploy-v0.${BUILD_NUMBER}.yaml
+            		sed -i 's#RSCOUNT#${ReplicaCount}#' deploy-v0.${BUILD_NUMBER}.yaml
+            		sed -i 's#NS#${Namespace}#' deploy-v0.${BUILD_NUMBER}.yaml	
+            		sed -i 's#HOSTNAME#${host_name}#' deploy-v0.${BUILD_NUMBER}.yaml
 		"""
     	}
 	// 部署到K8S主机
@@ -58,7 +59,7 @@ node('sun-jnlp') {
 // 		when { environment name: 'action', value: 'release' }
 		echo "6. Deploy Stage"
 		sh """
-			kubectl -n ${Namespace} apply -f deploy.yaml  --record=true
+			kubectl -n ${Namespace} apply -f deploy-v0.${BUILD_NUMBER}.yaml  --record=true
 			sleep 10
 			kubectl -n ${Namespace} get pod
 		"""
